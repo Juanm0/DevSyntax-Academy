@@ -1,0 +1,44 @@
+.hero {
+  padding: 5rem 2rem;
+}
+
+.hero-content {
+  text-align: center;
+}
+
+.hero h1 {
+  font-size: 3rem;
+  font-weight: 800;
+}
+
+.hero h1 span {
+  color: var(--primary);
+}
+
+.hero p {
+  margin-top: 1rem;
+  color: var(--text-muted);
+  font-size: 1.1rem;
+}
+
+.hero-actions {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+}
+
+.primary-btn {
+  background: var(--primary);
+  color: #020617;
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  font-weight: 600;
+}
+
+.secondary-btn {
+  border: 1px solid var(--border);
+  padding: 0.8rem 1.6rem;
+  border-radius: 8px;
+  color: var(--text);
+}
