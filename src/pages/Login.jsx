@@ -1,23 +1,46 @@
+import { useState } from "react";
+import { Link, useNavigate } from "react-router-dom";
 import AuthCard from "../components/ui/AuthCard";
 import Input from "../components/ui/Input";
 import Button from "../components/ui/Button";
-import { Link } from "react-router-dom";
+import { signIn } from "../services/auth.service";
 
 export default function Login() {
+  const navigate = useNavigate();
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [error, setError] = useState("");
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setError("");
+
+    try {
+      await signIn(email, password);
+      navigate("/dashboard");
+    } catch (err) {
+      setError(err.message);
+    }
+  };
+
   return (
     <AuthCard title="Iniciar sesión">
-      <form>
+      <form onSubmit={handleSubmit}>
         <Input
           label="Email"
           type="email"
-          placeholder="tu@email.com"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
         />
 
         <Input
           label="Contraseña"
           type="password"
-          placeholder="********"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
         />
+
+        {error && <p style={{ color: "tomato" }}>{error}</p>}
 
         <Button>Entrar</Button>
       </form>
