@@ -47,21 +47,29 @@ import { supabase } from "./supabaseClient";
    ADMIN
 ====================== */
 
-export async function createCourse({ title, description }) {
+export async function createCourse(course) {
+  const payload = {
+    ...course,          // title, description, arrays, lo que venga
+    is_published: false // forzado desde el backend
+  };
+
   const { data, error } = await supabase
     .from("courses")
-    .insert([
-      {
-        title,
-        description,
-        is_published: false,
-      },
-    ])
+    .insert([payload])
     .select()
     .single();
 
   if (error) throw error;
   return data;
+}
+
+export async function publishCourse(courseId, value) {
+  const { error } = await supabase
+    .from("courses")
+    .update({ is_published: value })
+    .eq("id", courseId);
+
+  if (error) throw error;
 }
 
 /* ======================

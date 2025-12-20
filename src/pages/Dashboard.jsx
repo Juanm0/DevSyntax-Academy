@@ -58,6 +58,9 @@ import { createCourse } from "../services/course.service";
 export default function Dashboard() {
   const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
+  const [learn, setLearn] = useState("");
+  const [requirements, setRequirements] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const [success, setSuccess] = useState(null);
@@ -69,10 +72,20 @@ export default function Dashboard() {
     setSuccess(null);
 
     try {
-      await createCourse({ title, description });
+      await createCourse({
+        title,
+        description,
+        what_you_will_learn: learn.split("\n").filter(Boolean),
+        requirements: requirements.split("\n").filter(Boolean),
+      });
+
       setSuccess("Curso creado correctamente");
+
+      // limpiar formulario
       setTitle("");
       setDescription("");
+      setLearn("");
+      setRequirements("");
     } catch (err) {
       setError(err.message);
     } finally {
@@ -81,7 +94,7 @@ export default function Dashboard() {
   };
 
   return (
-    <div>
+    <div style={{ maxWidth: 600, margin: "0 auto" }}>
       <h1>Panel de administración</h1>
 
       <form onSubmit={handleSubmit}>
@@ -102,6 +115,27 @@ export default function Dashboard() {
           />
         </div>
 
+        <div>
+          <label>Qué vas a aprender (uno por línea)</label>
+          <textarea
+            value={learn}
+            onChange={(e) => setLearn(e.target.value)}
+            placeholder="HTML semántico
+CSS moderno
+Flexbox y Grid"
+          />
+        </div>
+
+        <div>
+          <label>Requisitos (uno por línea)</label>
+          <textarea
+            value={requirements}
+            onChange={(e) => setRequirements(e.target.value)}
+            placeholder="PC o notebook
+Ganas de aprender"
+          />
+        </div>
+
         <button type="submit" disabled={loading}>
           {loading ? "Creando..." : "Crear curso"}
         </button>
@@ -112,5 +146,6 @@ export default function Dashboard() {
     </div>
   );
 }
+
 
 

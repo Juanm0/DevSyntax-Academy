@@ -29,6 +29,8 @@ export default function Home() {
 import { useEffect, useState } from "react";
 import { getPublishedCourses } from "../services/course.service";
 import CourseCard from "../components/course/CourseCard";
+import "./Home.css";
+
 
 export default function Home() {
   const [courses, setCourses] = useState([]);

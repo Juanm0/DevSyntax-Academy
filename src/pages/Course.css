@@ -1,0 +1,32 @@
+.course-page {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 24px;
+  color: white;
+}
+
+.course-hero {
+  width: 100%;
+  height: 360px;
+  object-fit: cover;
+  border-radius: 16px;
+  margin-bottom: 24px;
+}
+
+.course-page h1 {
+  font-size: 32px;
+  margin-bottom: 12px;
+}
+
+.course-page p {
+  font-size: 16px;
+  opacity: 0.85;
+  line-height: 1.6;
+}
+
+.course-page .price {
+  display: block;
+  margin-top: 24px;
+  font-size: 24px;
+  color: #4ade80;
+}
