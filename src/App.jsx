@@ -17,12 +17,8 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<Login />} />
         <Route path="/register" element={<Register />} />
-      </Route>
-
-      {/* <Route path="/dashboard" element={<Dashboard />} /> */}
-      <Route path="/course/:id" element={<Course />} />
-      
-      <Route
+        <Route path="/course/:id" element={<Course />} />
+        <Route
         path="/dashboard"
         element={
           <ProtectedRoute>
@@ -30,7 +26,10 @@ function App() {
           </ProtectedRoute>
         }
       />
+      </Route>
+      
 
+      
       <Route path="*" element={<NotFound />} />
     </Routes>
   );

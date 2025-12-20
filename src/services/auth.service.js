@@ -14,24 +14,14 @@ export async function signUp(email, password, fullName) {
   const { data, error } = await supabase.auth.signUp({
     email,
     password,
+    options: {
+      data: {
+        full_name: fullName,
+      },
+    },
   });
 
   if (error) throw error;
-
-  // Crear perfil del usuario
-  const user = data.user;
-
-  if (user) {
-    const { error: profileError } = await supabase
-      .from("profiles")
-      .insert({
-        id: user.id,
-        full_name: fullName,
-      });
-
-    if (profileError) throw profileError;
-  }
-
   return data;
 }
 
