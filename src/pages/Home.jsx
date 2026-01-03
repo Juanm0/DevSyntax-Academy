@@ -56,8 +56,9 @@ export default function Home() {
   if (error) return <p>{error}</p>;
 
   return (
-    <div className="home">
-      <h1>Todos los cursos</h1>
+  <div className="home">
+    <div className="home-glass">
+      <h1 className="home-title">Todos los cursos</h1>
 
       {courses.length === 0 ? (
         <p>No hay cursos disponibles</p>
@@ -69,5 +70,7 @@ export default function Home() {
         </div>
       )}
     </div>
-  );
+  </div>
+);
+
 }

@@ -1,7 +1,19 @@
 .footer {
-  border-top: 1px solid var(--border);
-  padding: 1.5rem;
+  margin-top: 4rem;
+  padding: 1.5rem 1rem;
   text-align: center;
+
+  background: rgba(17, 17, 17, 0.55);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+
   color: var(--text-muted);
-  background: var(--bg-soft);
+  font-size: 0.9rem;
 }
+
+.footer p {
+  opacity: 0.6;
+}
+
