@@ -87,3 +87,27 @@ export async function getPublishedCourses() {
   return data;
 }
 
+
+
+/* ======================
+   UPTADE CURSOS / CREATE CURSOS
+====================== */
+
+export async function getAllCourses() {
+  const { data, error } = await supabase
+    .from("courses")
+    .select("id, title")
+    .order("created_at", { ascending: false });
+
+  if (error) throw error;
+  return data;
+}
+
+export async function updateCourse(id, updates) {
+  const { error } = await supabase
+    .from("courses")
+    .update(updates)
+    .eq("id", id);
+
+  if (error) throw error;
+}

@@ -1,24 +1,51 @@
 .input-group {
   display: flex;
   flex-direction: column;
-  margin-bottom: 1.2rem;
+  margin-bottom: 1.3rem;
 }
 
+/* Label */
 .input-group label {
-  margin-bottom: 0.4rem;
-  font-size: 0.9rem;
-  color: var(--text-muted);
+  margin-bottom: 0.45rem;
+  font-size: 0.85rem;
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.75);
 }
 
+/* Input glass */
 .input-group input {
-  padding: 0.7rem;
-  border-radius: 6px;
-  border: 1px solid var(--border);
-  background: var(--bg);
-  color: var(--text);
+  padding: 0.75rem 0.9rem;
+  border-radius: 10px;
+
+  /* GLASS INPUT */
+  background: rgba(255, 255, 255, 0.18);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+
+  border: 1px solid rgba(255, 255, 255, 0.3);
+
+  color: white;
+  font-size: 0.95rem;
+
+  outline: none;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease;
 }
 
+/* Placeholder */
+.input-group input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Focus */
 .input-group input:focus {
-  outline: none;
-  border-color: var(--primary);
+  border-color: rgba(255, 255, 255, 0.65);
+  box-shadow:
+    0 0 0 2px rgba(255, 255, 255, 0.18),
+    0 8px 20px rgba(0, 0, 0, 0.35);
+}
+
+/* Autofill (Chrome fix) */
+input:-webkit-autofill {
+  -webkit-text-fill-color: white;
+  transition: background-color 9999s ease-in-out 0s;
 }

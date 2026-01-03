@@ -17,7 +17,6 @@
   --text-muted: #94a3b8;
 
   --border: #1e293b;
-
   --radius: 14px;
 }
 
@@ -29,33 +28,63 @@ body {
 
   color: var(--text);
   line-height: 1.6;
-
-  background: #e3b1c4;
-  background: radial-gradient(circle, rgba(227, 177, 196, 1) 0%, rgba(204, 180, 207, 1) 15%, rgba(212, 184, 184, 1) 27%, rgba(70, 109, 158, 1) 64%);
-
-  position: relative;
+  background: #0f172a;
   overflow-x: hidden;
 }
 
-/* Capa difuminada decorativa */
-body::before {
+/* CAPAS DE FONDO ANIMADAS (SUAVES) */
+body::before,
+body::after {
   content: "";
   position: fixed;
   inset: -20%;
-
-  background:
-    radial-gradient(600px circle at 20% 10%,
-      rgba(56, 189, 248, 0.12),
-      transparent 60%),
-    radial-gradient(500px circle at 80% 30%,
-      rgba(99, 102, 241, 0.1),
-      transparent 60%);
-
-  filter: blur(80px);
-  opacity: 0.9;
   z-index: -1;
+
+  background-size: 200% 200%;
+  filter: blur(90px);
+  opacity: 0.85;
+
+  animation: floatBackground 40s ease-in-out infinite;
 }
 
+/* Gradiente azul / rosa */
+body::before {
+  background: radial-gradient(
+    circle at 30% 30%,
+    rgba(63, 94, 251, 0.9),
+    rgba(252, 70, 107, 0.7),
+    transparent 70%
+  );
+}
+
+/* Gradiente pastel */
+body::after {
+  background: radial-gradient(
+    circle at 70% 40%,
+    rgba(227, 177, 196, 0.7),
+    rgba(204, 180, 207, 0.6),
+    rgba(212, 184, 184, 0.6),
+    rgba(70, 109, 158, 0.6),
+    transparent 75%
+  );
+
+  animation-delay: -20s;
+}
+
+/* Animación suave y continua */
+@keyframes floatBackground {
+  0% {
+    transform: translate(0%, 0%) scale(1);
+  }
+
+  50% {
+    transform: translate(-8%, -6%) scale(1.08);
+  }
+
+  100% {
+    transform: translate(0%, 0%) scale(1);
+  }
+}
 
 /* Links */
 a {
@@ -80,28 +109,30 @@ main {
   margin-top: 1.5rem;
   text-align: center;
   font-size: 0.9rem;
-  color: var(--text-muted);
+  color: rgba(255, 255, 255, 0.75);
 }
 
 .auth-link a {
-  color: var(--primary);
-  font-weight: 500;
+  color: #ffffff;
+  font-weight: 600;
+  text-shadow: 0 0 6px rgba(255, 255, 255, 0.35);
 }
 
-/* Scroll más fino */
+
+/* Scroll fino */
 ::-webkit-scrollbar {
   width: 8px;
 }
 
 ::-webkit-scrollbar-track {
-  background: var(--bg);
+  background: transparent;
 }
 
 ::-webkit-scrollbar-thumb {
-  background: var(--border);
+  background: rgba(255, 255, 255, 0.15);
   border-radius: 8px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: #334155;
+  background: rgba(255, 255, 255, 0.3);
 }
