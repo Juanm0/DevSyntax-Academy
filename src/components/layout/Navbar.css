@@ -89,3 +89,80 @@
   transform: translateY(-1px);
   box-shadow: 0 10px 28px rgba(255, 255, 255, 0.35);
 }
+
+/* ===== BRAND / LOGO FIX ===== */
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.brand-icon {
+  height: 32px;
+  width: auto;
+  display: block;
+}
+
+.brand-text {
+  display: flex;
+  align-items: center;
+  font-weight: 700;
+  font-size: 1.2rem;
+  line-height: 1;
+}
+
+/* ===== ACADEMY RGB BREATH EFFECT ===== */
+
+.academy {
+  margin-left: 6px;
+  color: #c4b5fd; /* violeta claro legible */
+  text-shadow: 0 0 6px rgba(167, 139, 250, 0.6);
+  animation: academy-breath 3.5s ease-in-out infinite;
+}
+
+.brand:hover .academy {
+  animation: academy-rgb 1.9s linear infinite;
+}
+
+/* Respiración suave */
+@keyframes academy-breath {
+  0% {
+    color: #ffffff;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+  }
+  50% {
+    color: #a78bfa;
+    text-shadow: 0 0 10px rgba(167, 139, 250, 0.9);
+  }
+  100% {
+    color: #ffffff;
+    text-shadow: 0 0 4px rgba(255, 255, 255, 0.4);
+  }
+}
+
+/* Hover tipo teclado RGB (blanco-violeta limpio) */
+@keyframes academy-rgb {
+  0% {
+    color: #ffffff;
+    text-shadow: 0 0 6px #ffffff;
+  }
+  25% {
+    color: #b8a1ee;
+    text-shadow: 0 0 12px #b89ef3;
+  }
+  50% {
+    color: #a78bfa;
+    text-shadow: 0 0 10px rgba(167, 139, 250, 0.9);
+    
+  }
+  70% {
+    color: #8b5cf6;
+    text-shadow: 0 0 12px #8b5cf6;
+  }
+  100% {
+    color: #ffffff;
+    text-shadow: 0 0 6px #ffffff;
+  }
+}
