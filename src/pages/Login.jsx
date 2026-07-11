@@ -95,7 +95,7 @@ export default function Login() {
 
       if (profile.role === "admin") {
         navigate("/dashboard");
-      } else if (profile.role === "profesor") {
+      } else if (profile.role === "teacher") {
         navigate("/dashboard-profesor");
       } else {
         navigate("/dashboard-alumno");

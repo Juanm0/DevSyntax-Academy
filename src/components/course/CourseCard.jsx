@@ -1,12 +1,21 @@
 import { Link } from "react-router-dom";
 import "./CourseCard.css";
 
+function formatPrice(price) {
+  if (price === null || price === undefined) return "Consultar precio";
+  return new Intl.NumberFormat("es-AR", {
+    style: "currency",
+    currency: "ARS",
+    maximumFractionDigits: 0,
+  }).format(price);
+}
+
 export default function CourseCard({ course }) {
   return (
     <Link to={`/course/${course.id}`} className="course-card">
       <div className="course-card-image">
         <img
-          src={course.thumbnail_url || "https://via.placeholder.com/800x450"}
+          src={course.thumbnail_url || "https://placehold.co/800x450?text=DevSyntax"}
           alt={course.title}
         />
       </div>
@@ -18,7 +27,7 @@ export default function CourseCard({ course }) {
           {course.description}
         </p>
 
-        <span className="price">$35.000</span>
+        <span className="price">{formatPrice(course.price)}</span>
       </div>
     </Link>
   );

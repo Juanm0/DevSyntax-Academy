@@ -12,14 +12,14 @@ export default function CourseLessons() {
 
   const [loading, setLoading] = useState(false);
 
-  useEffect(() => {
-    loadCourses();
-  }, []);
-
   async function loadCourses() {
     const { data } = await supabase.from("courses").select("id, title");
     setCourses(data || []);
   }
+
+  useEffect(() => {
+    loadCourses();
+  }, []);
 
   async function loadLessons(courseId) {
     const { data } = await supabase

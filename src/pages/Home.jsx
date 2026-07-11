@@ -1,31 +1,3 @@
-/* import "./Home.css";
-
-export default function Home() {
-  return (
-    <section className="hero">
-      <div className="container hero-content">
-        <h1>
-          Aprendé desarrollo <span>en serio</span>
-        </h1>
-        <p>
-          Cursos prácticos de programación y tecnología, pensados para el
-          mundo real.
-        </p>
-
-        <div className="hero-actions">
-          <a href="/register" className="primary-btn">
-            Empezar ahora
-          </a>
-          <a href="/login" className="secondary-btn">
-            Ya tengo cuenta
-          </a>
-        </div>
-      </div>
-    </section>
-  );
-}
- */
-
 import { useEffect, useState } from "react";
 import { getPublishedCourses } from "../services/course.service";
 import CourseCard from "../components/course/CourseCard";
@@ -43,6 +15,7 @@ export default function Home() {
         const data = await getPublishedCourses();
         setCourses(data);
       } catch (err) {
+        console.error(err);
         setError("No se pudieron cargar los cursos");
       } finally {
         setLoading(false);

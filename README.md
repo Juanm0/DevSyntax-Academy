@@ -1,16 +1,68 @@
-# React + Vite
+# DevSyntax Academy
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Plataforma de cursos cortos y en vivo para gente que quiere entrar al mundo tech: HTML/CSS desde cero e inglés técnico para programadores. Grupos chicos, clases en vivo, proyecto real al final de cada curso.
 
-Currently, two official plugins are available:
+## Stack
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+- **React 19** + **Vite** — frontend
+- **React Router** — navegación
+- **Supabase** — autenticación, base de datos (Postgres) y control de acceso por rol
 
-## React Compiler
+## Estructura del proyecto
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+```
+src/
+├── components/
+│   ├── course/       # Tarjeta de curso (CourseCard)
+│   ├── layout/        # Navbar, Footer, MainLayout
+│   └── ui/            # Button, Input, AuthCard (componentes reutilizables)
+├── hooks/
+│   └── useAuth.js     # Hook de sesión + perfil del usuario logueado
+├── pages/              # Una página por ruta (Home, Login, Register, Course, Dashboards)
+├── services/           # Toda la comunicación con Supabase vive acá
+│   ├── auth.service.js
+│   ├── course.service.js
+│   ├── enrollment.service.js
+│   └── supabaseClient.js
+└── styles/             # Estilos globales
+```
 
-## Expanding the ESLint configuration
+## Roles de usuario
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+La plataforma tiene tres roles, guardados en la tabla `profiles` (columna `role`):
+
+| Rol | Puede |
+|---|---|
+| `admin` | Crear y editar cursos, ver todos los cursos |
+| `teacher` | Ver y administrar las clases de sus propios cursos |
+| `student` | Inscribirse a cursos y ver su progreso |
+
+## Cómo correr el proyecto en local
+
+1. Cloná el repo e instalá las dependencias:
+   ```bash
+   npm install
+   ```
+
+2. Creá un archivo `.env` en la raíz (no lo subas a git, ver más abajo) con:
+   ```
+   VITE_SUPABASE_URL=tu_url_de_supabase
+   VITE_SUPABASE_ANON_KEY=tu_anon_key_de_supabase
+   ```
+   Estos valores salen de tu proyecto en [supabase.com](https://supabase.com) → **Settings → API**.
+
+3. Corré el servidor de desarrollo:
+   ```bash
+   npm run dev
+   ```
+
+## Variables de entorno y seguridad
+
+**Importante:** el archivo `.env` nunca debe subirse al repositorio. Contiene las claves de conexión a la base de datos. Asegurate de que `.env` esté en `.gitignore` antes de tu próximo commit.
+
+## Scripts disponibles
+
+- `npm run dev` — servidor de desarrollo
+- `npm run build` — build de producción
+- `npm run lint` — corre ESLint sobre el proyecto
+- `npm run preview` — previsualiza el build de producción

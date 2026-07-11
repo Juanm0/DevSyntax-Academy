@@ -8,31 +8,6 @@ export default function StudentDashboard() {
   const [progress, setProgress] = useState({});
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    loadMyCourses();
-  }, []);
-
-  async function loadMyCourses() {
-    const user = (await supabase.auth.getUser()).data.user;
-    if (!user) return;
-
-    // cursos donde está inscripto
-    const { data: enrolledCourses } = await supabase
-      .from("enrollments")
-      .select("courses(*)")
-      .eq("user_id", user.id);
-
-    const coursesData = enrolledCourses?.map((e) => e.courses) || [];
-    setCourses(coursesData);
-
-    // cargar clases y progreso
-    for (const course of coursesData) {
-      await loadLessons(course.id, user.id);
-    }
-
-    setLoading(false);
-  }
-
   async function loadLessons(courseId, userId) {
     const { data: lessons } = await supabase
       .from("lessons")
@@ -55,6 +30,31 @@ export default function StudentDashboard() {
       [courseId]: progressData || [],
     }));
   }
+
+  async function loadMyCourses() {
+    const user = (await supabase.auth.getUser()).data.user;
+    if (!user) return;
+
+    // cursos donde está inscripto
+    const { data: enrolledCourses } = await supabase
+      .from("enrollments")
+      .select("courses(*)")
+      .eq("user_id", user.id);
+
+    const coursesData = enrolledCourses?.map((e) => e.courses) || [];
+    setCourses(coursesData);
+
+    // cargar clases y progreso
+    for (const course of coursesData) {
+      await loadLessons(course.id, user.id);
+    }
+
+    setLoading(false);
+  }
+
+  useEffect(() => {
+    loadMyCourses();
+  }, []);
 
   async function toggleLesson(lessonId, completed) {
     const user = (await supabase.auth.getUser()).data.user;
