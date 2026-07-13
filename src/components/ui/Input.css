@@ -85,7 +85,10 @@ input:-webkit-autofill {
 .toggle-password:hover {
   opacity: 1;
 }
-
+.toggle-password svg{
+    display:block;
+    transform: translateY(-6px);
+}
 /* Sacar los íconos nativos del navegador que se superponen con nuestro botón
    (el "ojo" de Edge, y el ícono del gestor de contraseñas de Chrome) */
 input::-ms-reveal,
