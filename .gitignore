@@ -22,4 +22,13 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Variables de entorno (contienen claves de Supabase, nunca subir)
 .env
+.env.local
+
+# Cache de Vite
+.vite
+
+# Zips sueltos
+*.zip
