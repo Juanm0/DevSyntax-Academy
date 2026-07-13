@@ -1,0 +1,213 @@
+.course-card {
+  display: block;
+  position: relative;
+
+  border-radius: 18px;
+  overflow: hidden;
+  text-decoration: none;
+  color: white;
+
+  /* GLASS */
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+
+  border: 1px solid rgba(255, 255, 255, 0.18);
+
+  box-shadow:
+    0 8px 30px rgba(0, 0, 0, 0.45),
+    inset 0 1px 0 rgba(255, 255, 255, 0.2);
+
+  transition:
+    transform 0.35s ease,
+    box-shadow 0.35s ease,
+    border-color 0.35s ease;
+}
+
+/* GLOW + ELEVACIÓN */
+.course-card:hover {
+  transform: translateY(-10px) scale(1.01);
+
+  box-shadow:
+    0 18px 60px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(167, 139, 250, 0.25),
+    inset 0 1px 0 rgba(255, 255, 255, 0.25);
+
+  border-color: rgba(167, 139, 250, 0.5);
+}
+
+/* Imagen */
+.course-card-image {
+  width: 100%;
+  height: 180px;
+  overflow: hidden;
+  position: relative;
+}
+
+.course-card-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+
+  transition: transform 0.6s ease;
+}
+
+/* Zoom suave de imagen */
+.course-card:hover img {
+  transform: scale(1.06);
+}
+
+/* Botón de play, solo aparece si el curso tiene preview_video_url */
+.play-overlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  background: rgba(2, 6, 23, 0.25);
+  opacity: 0;
+  transition: opacity 0.25s ease;
+}
+
+.play-overlay svg {
+  width: 44px;
+  height: 44px;
+  padding: 12px;
+  border-radius: 50%;
+  background: rgba(167, 139, 250, 0.85);
+  box-shadow: 0 0 24px rgba(167, 139, 250, 0.6);
+}
+
+.course-card:hover .play-overlay {
+  opacity: 1;
+}
+
+/* Badges sobre la imagen: nivel y duración */
+.image-badges {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  right: 10px;
+  display: flex;
+  justify-content: space-between;
+  gap: 8px;
+  pointer-events: none;
+}
+
+.badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: #e5e7eb;
+  background: rgba(2, 6, 23, 0.65);
+  backdrop-filter: blur(6px);
+  padding: 4px 9px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  text-transform: capitalize;
+}
+
+.badge svg {
+  color: var(--primary);
+  flex-shrink: 0;
+}
+
+/* Cuerpo */
+.course-card-body {
+  padding: 18px;
+}
+
+/* Título */
+.course-card-body h3 {
+  margin: 0 0 6px;
+  font-size: 1.05rem;
+  font-weight: 700;
+}
+
+/* Descripción (clamp elegante) */
+.course-description {
+  font-size: 0.9rem;
+  color: rgba(255, 255, 255, 0.75);
+  line-height: 1.4;
+
+  overflow: hidden;
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+
+  -webkit-line-clamp: 2;
+  line-clamp: 2; /* ← esto elimina el warning */
+}
+
+/* Chips de tecnologías (stack) */
+.stack-chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 12px;
+}
+
+.chip {
+  font-size: 0.72rem;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.85);
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  padding: 3px 9px;
+  border-radius: 999px;
+}
+
+.chip-muted {
+  color: rgba(255, 255, 255, 0.5);
+  background: transparent;
+}
+
+/* Footer: precio + CTA */
+.card-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: 14px;
+}
+
+/* Precio */
+.price {
+  display: inline-block;
+
+  font-weight: 700;
+  font-size: 0.95rem;
+
+  color: #4ade80;
+
+  background: rgba(74, 222, 128, 0.15);
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  box-shadow: inset 0 0 0 1px rgba(74, 222, 128, 0.35);
+}
+
+.view-course {
+  display: inline-block;
+
+  font-weight: 700;
+  font-size: 0.8rem;
+
+  color: #020617;
+
+  background: var(--primary);
+  padding: 6px 12px;
+  border-radius: 999px;
+
+  box-shadow: 0 2px 10px rgba(167, 139, 250, 0.5);
+
+  transition: background 0.2s ease, box-shadow 0.2s ease, transform 0.2s ease;
+}
+
+.course-card:hover .view-course {
+  background: #c4b5fd;
+  box-shadow: 0 4px 16px rgba(167, 139, 250, 0.7);
+  transform: translateX(2px);
+}

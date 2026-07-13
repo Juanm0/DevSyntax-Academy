@@ -1,0 +1,66 @@
+import { Routes, Route } from "react-router-dom";
+//comando pa githu
+import Home from "./pages/Home";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import ForgotPassword from "./pages/ForgotPassword";
+import ResetPassword from "./pages/ResetPassword";
+import Dashboard from "./pages/Dashboard";
+import Course from "./pages/Course";
+import NotFound from "./pages/NotFound";
+
+import ProtectedRoute from "./components/ProtectedRoute";
+import MainLayout from "./components/layout/MainLayout";
+
+// Nuevos dashboards
+import DashboardAlumno from "./pages/DashboardAlumno";
+import DashboardProfesor from "./pages/DashboardProfesor";
+
+function App() {
+  return (
+    <Routes>
+      <Route element={<MainLayout />}>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+        <Route path="/forgot-password" element={<ForgotPassword />} />
+        <Route path="/reset-password" element={<ResetPassword />} />
+        <Route path="/course/:id" element={<Course />} />
+
+        {/* ADMIN */}
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* ALUMNO */}
+        <Route
+          path="/dashboard-alumno"
+          element={
+            <ProtectedRoute allowedRoles={["student"]}>
+              <DashboardAlumno />
+            </ProtectedRoute>
+          }
+        />
+
+        {/* PROFESOR */}
+        <Route
+          path="/dashboard-profesor"
+          element={
+            <ProtectedRoute allowedRoles={["teacher"]}>
+              <DashboardProfesor />
+            </ProtectedRoute>
+          }
+        />
+      </Route>
+
+      <Route path="*" element={<NotFound />} />
+    </Routes>
+  );
+}
+
+export default App;
