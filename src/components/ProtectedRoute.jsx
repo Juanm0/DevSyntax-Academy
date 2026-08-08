@@ -19,7 +19,12 @@ export default function ProtectedRoute({ children, allowedRoles = null }) {
     return <Navigate to="/login" replace />;
   }
 
-  if (allowedRoles && !allowedRoles.includes(profile?.role)) {
+  const normalizedRole = profile?.role?.trim().toLowerCase();
+
+  if (
+    allowedRoles &&
+    !allowedRoles.map((r) => r.toLowerCase()).includes(normalizedRole)
+  ) {
     return <Navigate to="/" replace />;
   }
 

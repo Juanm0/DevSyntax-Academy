@@ -46,30 +46,36 @@ export default function Navbar() {
         .from("profiles")
         .select("role")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
 
-      setRole(profile?.role || null);
+      setRole(profile?.role?.trim().toLowerCase() || null);
     }
 
     loadUser();
 
+    // IMPORTANTE: nunca hacer `await` de llamadas a Supabase directamente
+    // dentro de onAuthStateChange (bug conocido de supabase-js que deja el
+    // cliente en deadlock: cualquier llamada posterior se cuelga para
+    // siempre). Diferimos con setTimeout para salir del contexto del lock.
     const {
       data: { subscription },
-    } = supabase.auth.onAuthStateChange(async (_event, session) => {
-      setUser(session?.user ?? null);
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setTimeout(async () => {
+        setUser(session?.user ?? null);
 
-      if (!session?.user) {
-        setRole(null);
-        return;
-      }
+        if (!session?.user) {
+          setRole(null);
+          return;
+        }
 
-      const { data: profile } = await supabase
-        .from("profiles")
-        .select("role")
-        .eq("id", session.user.id)
-        .single();
+        const { data: profile } = await supabase
+          .from("profiles")
+          .select("role")
+          .eq("id", session.user.id)
+          .maybeSingle();
 
-      setRole(profile?.role || null);
+        setRole(profile?.role?.trim().toLowerCase() || null);
+      }, 0);
     });
 
     return () => subscription.unsubscribe();

@@ -86,7 +86,7 @@ export default function Course() {
           .select("*")
           .eq("course_id", id)
           .eq("user_id", user.id)
-          .single();
+          .maybeSingle();
 
         setIsEnrolled(!!enrollment);
 

@@ -1,35 +1,15 @@
-/* import { useEffect, useState } from "react";
-import { supabase } from "../services/supabaseClient";
-
-export function useAuth() {
-  const [session, setSession] = useState(null);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    supabase.auth.getSession().then(({ data }) => {
-      setSession(data.session);
-      setLoading(false);
-    });
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange((_event, session) => {
-      setSession(session);
-    });
-
-    return () => subscription.unsubscribe();
-  }, []);
-
-  return {
-    session,
-    user: session?.user ?? null,
-    loading,
-  };
-}
- */
-
 import { useEffect, useState } from "react";
 import { supabase } from "../services/supabaseClient";
+
+async function loadProfile(userId) {
+  const { data } = await supabase
+    .from("profiles")
+    .select("*")
+    .eq("id", userId)
+    .maybeSingle();
+
+  return data;
+}
 
 export function useAuth() {
   const [user, setUser] = useState(null);
@@ -37,36 +17,54 @@ export function useAuth() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const getSessionAndProfile = async () => {
-      const {
-        data: { session },
-      } = await supabase.auth.getSession();
+    let isMounted = true;
+
+    // Carga inicial de la sesión al montar.
+    supabase.auth.getSession().then(async ({ data: { session } }) => {
+      if (!isMounted) return;
 
       const currentUser = session?.user ?? null;
       setUser(currentUser);
 
       if (currentUser) {
-        const { data: profileData } = await supabase
-          .from("profiles")
-          .select("*")
-          .eq("id", currentUser.id)
-          .single();
-
-        setProfile(profileData);
+        const profileData = await loadProfile(currentUser.id);
+        if (isMounted) setProfile(profileData);
       }
 
-      setLoading(false);
-    };
-
-    getSessionAndProfile();
-
-    const {
-      data: { subscription },
-    } = supabase.auth.onAuthStateChange(() => {
-      getSessionAndProfile();
+      if (isMounted) setLoading(false);
     });
 
-    return () => subscription.unsubscribe();
+    // IMPORTANTE: nunca hacer `await` de llamadas a Supabase directamente
+    // dentro de onAuthStateChange. Es un bug/anti-patrón conocido de
+    // supabase-js que deja el cliente en deadlock (cualquier llamada
+    // posterior a Supabase se cuelga para siempre). Por eso usamos la
+    // `session` que ya viene en el propio callback y diferimos cualquier
+    // llamada adicional con setTimeout, tal como recomienda Supabase.
+    const {
+      data: { subscription },
+    } = supabase.auth.onAuthStateChange((_event, session) => {
+      setTimeout(() => {
+        if (!isMounted) return;
+
+        const currentUser = session?.user ?? null;
+        setUser(currentUser);
+
+        if (currentUser) {
+          loadProfile(currentUser.id).then((profileData) => {
+            if (isMounted) setProfile(profileData);
+          });
+        } else {
+          setProfile(null);
+        }
+
+        setLoading(false);
+      }, 0);
+    });
+
+    return () => {
+      isMounted = false;
+      subscription.unsubscribe();
+    };
   }, []);
 
   return { user, profile, loading };

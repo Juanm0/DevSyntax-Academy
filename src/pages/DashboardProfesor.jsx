@@ -26,7 +26,7 @@ export default function DashboardProfesor() {
       const { data: coursesData } = await supabase
         .from("courses")
         .select("*")
-        .eq("teacher_id", user.id);
+        .or(`teacher_id.eq.${user.id},instructor_id.eq.${user.id}`);
 
       setCourses(coursesData || []);
       setLoading(false);

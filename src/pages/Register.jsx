@@ -11,18 +11,42 @@ export default function Register() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [needsConfirmation, setNeedsConfirmation] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     setError("");
 
     try {
-      await signUp(email, password, fullName);
+      const data = await signUp(email, password, fullName);
+
+      // Si Supabase tiene la confirmación de email activada, signUp no
+      // devuelve una sesión activa: hay que avisarle al usuario que revise
+      // su correo en vez de asumir que ya quedó logueado.
+      if (!data.session) {
+        setNeedsConfirmation(true);
+        return;
+      }
+
       navigate("/");
     } catch (err) {
       setError(err.message);
     }
   };
+
+  if (needsConfirmation) {
+    return (
+      <AuthCard title="Confirmá tu cuenta">
+        <p style={{ color: "#4ade80" }}>
+          Te enviamos un mail a <strong>{email}</strong> para confirmar tu
+          cuenta. Revisá también la carpeta de spam antes de iniciar sesión.
+        </p>
+        <p className="auth-link">
+          <Link to="/login">Ir a iniciar sesión</Link>
+        </p>
+      </AuthCard>
+    );
+  }
 
   return (
     <AuthCard title="Crear cuenta">

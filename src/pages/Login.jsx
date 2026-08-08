@@ -34,13 +34,15 @@ export default function Login() {
         .from("profiles")
         .select("role")
         .eq("id", user.id)
-        .single();
+        .maybeSingle();
 
       if (profileError) throw profileError;
 
-      if (profile.role === "admin") {
+      const role = profile?.role?.trim().toLowerCase();
+
+      if (role === "admin") {
         navigate("/dashboard");
-      } else if (profile.role === "teacher") {
+      } else if (role === "teacher") {
         navigate("/dashboard-profesor");
       } else {
         navigate("/dashboard-alumno");
