@@ -32,23 +32,61 @@
 
 .course-hero {
   grid-column: 1 / 3;
-  background: linear-gradient(
-    135deg,
-    rgba(139, 92, 246, 0.35),
-    rgba(236, 72, 153, 0.35)
-  );
-  border-radius: 22px;
-  padding: 3rem 2.5rem 4rem;
-  backdrop-filter: blur(20px);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  box-shadow: 0 25px 50px rgba(0, 0, 0, 0.35);
+  background: #0f172a;
+  border-radius: 24px;
+  padding: 3.75rem 2.75rem 5rem;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0 30px 70px rgba(0, 0, 0, 0.5);
   position: relative;
+  overflow: hidden;
+}
+
+/* Halo de color de marca, independiente de la imagen de portada */
+.course-hero::after {
+  content: "";
+  position: absolute;
+  top: -40%;
+  right: -15%;
+  width: 60%;
+  height: 140%;
+  background: radial-gradient(
+    circle,
+    rgba(167, 139, 250, 0.35),
+    transparent 70%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Refuerza el contraste del texto sobre la imagen de portada,
+   sin importar qué traiga dibujado la imagen */
+.course-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(2, 6, 23, 0.55) 0%,
+    rgba(2, 6, 23, 0.75) 55%,
+    rgba(2, 6, 23, 0.92) 100%
+  );
+  pointer-events: none;
+  z-index: 0;
+}
+
+.course-hero > * {
+  position: relative;
+  z-index: 1;
 }
 
 .course-hero h1 {
-  font-size: 2.4rem;
-  margin: 0.75rem 0 0.5rem;
+  font-size: 2.75rem;
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 1rem 0 0.6rem;
   max-width: 720px;
+  text-shadow: 0 2px 16px rgba(0, 0, 0, 0.6);
 }
 
 .hero-badges {
@@ -60,16 +98,23 @@
   font-size: 0.75rem;
   font-weight: 700;
   color: #e5e7eb;
-  background: rgba(2, 6, 23, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.2);
-  padding: 4px 10px;
+  background: rgba(167, 139, 250, 0.15);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(167, 139, 250, 0.4);
+  padding: 5px 12px;
   border-radius: 999px;
   text-transform: capitalize;
+  letter-spacing: 0.02em;
 }
 
 .hero-instructor {
-  opacity: 0.85;
+  opacity: 0.9;
   margin-bottom: 0.5rem;
+  font-size: 0.95rem;
+}
+
+.hero-instructor strong {
+  color: var(--primary);
 }
 
 .hero-cta {
@@ -85,7 +130,7 @@
 
 .course-body {
   grid-column: 1 / 2;
-  margin-top: 2.5rem;
+  margin-top: 3.75rem;
 }
 
 .course-description {
@@ -116,20 +161,21 @@
 
 .course-cta {
   margin-top: 1.5rem;
-  padding: 0.75rem 1.4rem;
+  padding: 0.8rem 1.5rem;
   border-radius: 999px;
   border: none;
   cursor: pointer;
-  font-weight: 600;
-  background: var(--primary);
-  color: #020617;
-  box-shadow: 0 8px 24px rgba(167, 139, 250, 0.4);
+  font-weight: 700;
+  font-size: 0.95rem;
+  background: linear-gradient(135deg, #c4b5fd, var(--primary));
+  color: #1e1145;
+  box-shadow: 0 10px 28px rgba(167, 139, 250, 0.45);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
 }
 
 .course-cta:hover {
   transform: translateY(-2px);
-  box-shadow: 0 12px 28px rgba(167, 139, 250, 0.55);
+  box-shadow: 0 14px 32px rgba(167, 139, 250, 0.6);
 }
 
 .course-cta.full {
@@ -156,8 +202,17 @@
   border-radius: 20px;
   padding: 1.5rem;
   border: 1px solid rgba(255, 255, 255, 0.12);
+  border-top: 2px solid rgba(167, 139, 250, 0.5);
   box-shadow:
     0 20px 40px rgba(0, 0, 0, 0.4),
+    inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.course-sidebar-card:hover {
+  transform: translateY(-2px);
+  box-shadow:
+    0 24px 48px rgba(0, 0, 0, 0.45),
     inset 0 1px 0 rgba(255, 255, 255, 0.08);
 }
 
@@ -217,7 +272,21 @@
 }
 
 .course-content h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.1rem;
+  font-size: 1.35rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.course-content h2::before {
+  content: "";
+  width: 4px;
+  height: 1.1em;
+  border-radius: 3px;
+  background: var(--primary);
+  display: inline-block;
 }
 
 .course-list {
@@ -228,9 +297,16 @@
 .course-list li {
   background: rgba(15, 23, 42, 0.6);
   border: 1px solid rgba(255, 255, 255, 0.1);
+  border-left: 3px solid rgba(167, 139, 250, 0.5);
   padding: 0.75rem 1rem;
   border-radius: 12px;
   margin-bottom: 0.6rem;
+  transition: border-color 0.15s ease, transform 0.15s ease;
+}
+
+.course-list li:hover {
+  border-left-color: var(--primary);
+  transform: translateX(2px);
 }
 
 /* Lo que aprenderás: grid numerado */
@@ -248,6 +324,12 @@
   border: 1px solid rgba(255, 255, 255, 0.1);
   padding: 0.75rem 1rem;
   border-radius: 12px;
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.learn-item:hover {
+  background: rgba(167, 139, 250, 0.08);
+  transform: translateY(-1px);
 }
 
 .learn-num {
@@ -295,6 +377,12 @@
   padding: 0.85rem 1.1rem;
   border-radius: 12px;
   margin-bottom: 0.6rem;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.lesson-row:not(.locked):hover {
+  border-color: rgba(167, 139, 250, 0.4);
+  background: rgba(15, 23, 42, 0.8);
 }
 
 .lesson-row.locked {

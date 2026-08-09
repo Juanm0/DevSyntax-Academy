@@ -145,7 +145,7 @@ export default function Course() {
         className="course-hero"
         style={{
           backgroundImage: course.cover_image
-            ? `linear-gradient(135deg, rgba(2,6,23,0.6), rgba(2,6,23,0.75)), url(${course.cover_image})`
+            ? `linear-gradient(135deg, rgba(2,6,23,0.82), rgba(2,6,23,0.92)), url(${course.cover_image})`
             : undefined,
           backgroundSize: "cover",
           backgroundPosition: "center",
